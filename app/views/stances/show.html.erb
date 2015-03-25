@@ -1,46 +1,57 @@
-<div class="row" style="margin-bottom: 2em; border-bottom: 1.5px solid #F5E0DA;">
-  <div class="large-7 columns" style="text-align: right;">
-    <h2><span class='text-blue'><a href="/users/<%=@author.id%>"><%= @author.username %></a></span> believes in <br><span class='text-red'><%= @position.description %></span></h2>
-  </div>
-  <div class="large-5 columns">
-    <h2 align="center" style="margin-top: 0.5em;"><a href="/stances/issues/<%= @position.issue.description %> " style="text-shadow: 52px 32px 4px #CED3DE;"><%= @position.issue.description %></a></h2>
-  </div>
-</div>
-
-<div class="row">
-  <div class="large-7 columns">
-    <!-- <div class="panel"> -->
-      <ul class="small-block-grid-3">
-        <% @stance.legislators.each do |legislator| %>
-
-          <li>
-            <div style="background-color; #FAFAFA;" align="right">
-            <a href="/legislators/<%= legislator.id %>"><span><%= legislator.first_name %> <%= legislator.last_name %></span>  <img src="<%= legislator.img_url %>" class="circle_face"></a><br></img>
-            </div>
-          </li>
-        <% end %>
-      </ul>
-    <!-- </div> -->
-      <% if logged_in? && (@author == current_user) %>
-        <%= button_to "Delete", @stance, method: :delete, class: "button radius" %>
+<div id="one-stance-container">
+  <div class="row" style="border: 1.5px solid #D3D7E0; border-radius: 2em;">
+    <div class="small-12 medium-9 large-9 columns">
+      <h2><span class='text-red'><%= @position.description %></span></h2>
+      <span class='text-blue' style="font-size: 1.3em; font-variant: small-caps;">created by <a href="/users/<%=@author.id%>"><%= @author.username %></a></span></h2><br>
+      <% if @stance.upvotes.count > 0 %>
+        <h2  class='text-blue' style="margin: 0;"><span id="upvote_count"><%= @stance.upvotes.count %> </span> <span style="font-size: 0.6em;"><%= @stance.upvotes.count == 1 ? "user believes" : "users believe" %> this stance is accurate</span></h2>
+      <% else %>
       <% end %>
+      <h4  class='text-blue'><span style="font-size: 1.3em;">$<%= @stance.total_donated_amount > 0 ? @stance.total_donated_amount : 0 %></span> countributed</h4>
+    </div>
+    <div>
+      <div class="small-6 medium-3 large-3 columns" align="right">
+        <h2><a href="/stances/issues/<%= @position.issue.description %>"><%= @position.issue.description %></a><br>
+      </div>
+
+    </div>
   </div>
-  <!-- Sidebar -->
-  <div class="large-5 columns" align="center">
-    <h2 id="legislators_count"><%= @stance.legislators.count %> <small>Supporting legislators</small></h2>
-    <h2><span id="upvote_count"><%= @stance.upvotes.count %></span> <small>Upvotes</small></h2>
-
-  <% if logged_in? %>
-    <%= render partial: "upvotes/new", locals: {upvote: @upvote, stance: @stance} %>
-  <% else %>
-    <h4>Sign in to upvote.</h4>
-  <% end %>
-    <!-- End Sidebar -->
-
-  <%= form_tag stance_donations_new_path(@stance), method: :get do %>
-    <%= submit_tag "Donate", class: "button radius" %>
-  <% end %>
+  <div class="small-6 medium-3 large-3 columns">
+    <% if logged_in? %>
+      <% if !@stance.voted(current_user.id)  %>
+        <%= render partial: "upvotes/new", locals: {upvote: @upvote, stance: @stance} %>
+      <% else %>
+        <div class="disabled-upvote-arrow"></div>
+      <% end %>
+    <% else %>
+      <h4>Sign in to upvote.</h4>
+    <% end %>
+  </div>
+  <div align="center" style="margin-top: 1.8em;">
+    <%= form_tag stance_donations_new_path(@stance), method: :get do %>
+      <%= submit_tag "D  O  N  A  T  E", class: "button radius donate_button button-blue" %>
+    <% end %>
 
   </div>
-</div>
+
+    <h2 id="legislators_count"><%= @stance.legislators.count %> <span class='text-blue' style="font-size: 0.75em;">Supporting legislators</span></h2>
+    <ul class="panel supporting-legis-list small-block-grid-1 medium-block-grid-3 small-block-grid-3">
+      <% @stance.legislators.each do |legislator| %>
+
+        <li>
+          <a href="/legislators/<%= legislator.id %>">
+            <div style="background-color; #FAFAFA;">
+            <img src="<%= legislator.img_url %>" class="circle_face" style="margin-right: 1em;"></img><span><%= legislator.first_name %> <%= legislator.last_name %> (<%= legislator.party %>)</span>
+          </div>
+        </a>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+<% if logged_in? && (@author == current_user) %>
+  <div align="center" style="margin-top: 2em;">
+    <%= button_to "Delete", @stance, method: :delete, class: "button radius button-blue" %>
+  </div>
+<% end %>
 
