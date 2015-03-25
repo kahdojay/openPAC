@@ -25,6 +25,7 @@ class StancesController < ApplicationController
   end
 
   def show
+    @issues = Issue.all
     @stance = Stance.find(params[:id])
     @position = Position.find(@stance.position_id)
     @author = User.find(@stance.user_id)
