@@ -2,8 +2,14 @@
   max-width: 80rem;
 }
 
+#one-stance-container{
+  width: 90%;
+  margin: 0 auto;
+}
+
 .stance_index_title{
   margin-left: 1em !important;
+  margin-top: 1em !important;
 }
 
 .stance_detail_container{
@@ -90,4 +96,40 @@ ul{
 
 .footer-left{
   border-right: 1px solid white;
+}
+
+.donate_button{
+  width: 40% !important;
+}
+
+.donate_button:hover{
+  background-color: #B15234 !important;
+  font-weight: bold;
+}
+
+#legislators_count{
+  text-align: center;
+  margin-bottom: 0.3em;
+}
+
+.supporting-legis-list{
+  margin: 0.5em 2em 0 2em;
+  border: 3.5px solid #DEDEDE;
+}
+
+.f-dropdown {
+  background-color: white !important;
+  max-width: 130px !important;
+}
+
+#stance-index-header {
+  background-image: url("capitol1.jpg");
+  width: 67%;
+  height: 300px;
+  background-size: 100%;
+  margin: 0 auto;
+}
+
+.sort-popular-recent {
+  margin: 0 auto;
 }
