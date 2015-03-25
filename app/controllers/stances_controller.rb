@@ -2,7 +2,7 @@ class StancesController < ApplicationController
   include AuthsHelper
 
   def index
-    @stances = Stance.all.order("created_at DESC")[0..9]
+    @stances = Stance.all.order("created_at DESC")[0..8]
     @issues = Issue.all
     @upvote = Upvote.new
   end
@@ -10,9 +10,9 @@ class StancesController < ApplicationController
   def load
     @upvote = Upvote.new
     if params[:select] == "All"
-      @stances = Stance.all.order("created_at DESC")[(params[:i].to_i-1)+1..(params[:i].to_i+9)]
+      @stances = Stance.all.order("created_at DESC")[(params[:i].to_i-1)+1..(params[:i].to_i+8)]
     else
-      @stances = Stance.search(params[:select])[(params[:i].to_i-1)+1..(params[:i].to_i+9)]
+      @stances = Stance.search(params[:select])[(params[:i].to_i-1)+1..(params[:i].to_i+8)]
     end
     render partial: "stance_list", locals: {stances: @stances}
   end
@@ -55,7 +55,7 @@ class StancesController < ApplicationController
   def select
     @upvote = Upvote.new
     @issues = Issue.all
-    @stances = Stance.search(params[:select])[(params[:i].to_i-1)+1..(params[:i].to_i)+9]
+    @stances = Stance.search(params[:select])[(params[:i].to_i-1)+1..(params[:i].to_i)+8]
     if request.xhr?
       render partial: "stance_list", locals: {stances: @stances}
     else
