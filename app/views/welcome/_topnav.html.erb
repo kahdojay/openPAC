@@ -19,6 +19,14 @@
   <ul class="right">
     <% if logged_in? %>
       <li>
+          <a data-dropdown="drop3" aria-controls="drop3" aria-expanded="false" data-options="is_hover: true">STANCES BY ISSUE</a>
+          <ul id="drop3" class="f-dropdown" data-dropdown-content aria-hidden="true" tabindex="-1">
+            <% @issues.each do |issue| %>
+            <li><a href="/stances/issues/<%= issue.description %>" data-search><%= issue.description %></a></li>
+            <% end %>
+          </ul>
+      </li>
+      <li>
         <a data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" data-options="is_hover: true"><%= current_user.username.upcase %></a>
         <ul id="drop1" class="f-dropdown" data-dropdown-content aria-hidden="true" tabindex="-1">
           <li><%= link_to "PROFILE", user_path(current_user) %></li>
