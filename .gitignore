@@ -12,3 +12,6 @@
 !/log/.keep
 /tmp
 /db/schema.rb
+.idea/
+.ruby-gemset
+.ruby-version

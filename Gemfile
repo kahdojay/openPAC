@@ -10,6 +10,8 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.1.0'
+
+gem 'thin' # faster server
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
@@ -24,6 +26,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 #Foundation Gem
 gem 'foundation-rails'
+gem 'simple_form'
 
 #D3
 #gem "d3_rails"
@@ -38,7 +41,6 @@ gem 'bcrypt', '~> 3.1.7'
 # gem 'capistrano-rails', group: :development
 
 gem 'google-webfonts-rails'
-gem "jquery-slick-rails"
 
 group :development, :test do
 
@@ -52,10 +54,11 @@ end
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
+  gem 'guard-livereload', '~> 2.4', require: false
 end
 
+gem 'faker'
 group :test do
-  gem 'faker'
   gem 'capybara'
   gem 'database_cleaner'
   gem 'launchy'
@@ -63,5 +66,3 @@ group :test do
 end
 
 gem 'dotenv-rails', :groups => [:development, :test]
-
-gem 'stripe-rails'
